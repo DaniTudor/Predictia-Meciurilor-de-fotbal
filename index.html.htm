@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <title>Predicția meciurilor de fotbal</title>
+  <style>
+    body {
+      background-color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      color: black;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      width: 80%;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .match {
+      background: #f4f4f4;
+      padding: 10px;
+      margin: 10px auto;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 300px;
+    }
+    .match img {
+      width: 100%;
+      height: auto;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 15px;
+      background: #0288d1;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 10px 5px;
+    }
+    button:hover {
+      background: #0270a1;
+    }
+    .conclusions {
+      margin-top: 30px;
+      display: none;
+    }
+    .image-container img {
+      width: 90%;
+      max-width: 800px;
+      height: auto;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Predicția scorurilor finale pentru meciurile de fotbal</h1>
+    <div id="matches"></div>
+
+    <button onclick="getPredictions()">Generează Predicții</button>
+    <button onclick="clearPredictions()">Înapoi</button>
+    <button onclick="randomMatches()">Meciuri Random</button>
+    <button onclick="toggleConclusions()">Concluziile</button>
+
+    <!-- Imagini introductive -->
+    <div class="image-container">
+      <a href="https://superbet.ro/introducere" target="_blank">
+        <img src="images1.jpg" alt="Imagine hartă">
+      </a>
+    </div>
+    <div class="image-container">
+      <img src="images2.jpg" alt="Imagine suplimentară 1">
+    </div>
+    <div class="image-container">
+      <img src="images3.jpg" alt="Imagine suplimentară 2">
+    </div>
+
+    <!-- Concluzii -->
+    <div class="conclusions" id="conclusions">
+      <h2>Concluzii</h2>
+      <p>Acest proiect a fost realizat pentru a prezenta predicțiile scorurilor finale ale meciurilor de fotbal pe baza unei baze de date predefinite.</p>
+      <p>Utilizatorii pot interacționa cu aplicația pentru a vizualiza meciuri, predicții și pentru a accesa linkuri externe cu informații suplimentare despre meciurile respective.</p>
+      <p>Fiecare meci are o predicție și un link asociat care redirecționează către pagini relevante pentru fiecare meci. Acest proiect demonstrează cum să gestionezi date și să le afișezi într-o formă atractivă și interactivă.</p>
+      <p>Scopul aplicației este de a oferi o metodă simplă și rapidă de a obține predicții și informații utile despre meciurile de fotbal.</p>
+    </div>
+  </div>
+
+  <script>
+    const dataset = [
+      { team1: "Bolton", team2: "Aston Villa", prediction: "1-0", image: "poza1.jpg", link: "https://www.google.com/search?q=Bolton+vs+Aston+Villa" },
+      { team1: "Aston Villa", team2: "West Ham", prediction: "1-0", image: "poza2.jpg", link: "https://www.google.com/search?q=Aston+Villa+vs+West+Ham" },
+      { team1: "Arsenal", team2: "Chelsea", prediction: "0-0", image: "poza15.jpg", link: "https://www.google.com/search?q=Arsenal+vs+Chelsea" },
+      { team1: "Newcastle", team2: "Swansea", prediction: "1-2", image: "poza4.jpg", link: "https://www.google.com/search?q=Newcastle+vs+Swansea" },
+      { team1: "Man United", team2: "Newcastle", prediction: "2-0", image: "poza5.jpg", link: "https://www.google.com/search?q=Man+United+vs+Newcastle" },
+      { team1: "Arsenal", team2: "Liverpool", prediction: "2-0", image: "poza6.jpg", link: "https://www.google.com/search?q=Arsenal+vs+Liverpool" },
+      { team1: "Stoke", team2: "West Brom", prediction: "2-0", image: "poza7.jpg", link: "https://www.google.com/search?q=Stoke+vs+West+Brom" },
+      { team1: "Newcastle", team2: "Birmingham", prediction: "2-1", image: "poza8.jpg", link: "https://www.google.com/search?q=Newcastle+vs+Birmingham" },
+      { team1: "Arsenal", team2: "Newcastle", prediction: "1-0", image: "poza9.jpg", link: "https://www.google.com/search?q=Arsenal+vs+Newcastle" },
+      { team1: "Watford", team2: "Tottenham", prediction: "0-0", image: "poza10.jpg", link: "https://www.google.com/search?q=Watford+vs+Tottenham" }
+    ];
+
+    function getPredictions() {
+      renderMatches(dataset);
+    }
+
+    function clearPredictions() {
+      document.getElementById("matches").innerHTML = "";
+    }
+
+    function randomMatches() {
+      const shuffled = dataset.sort(() => 0.5 - Math.random());
+      const selected = shuffled.slice(0, 3);
+      renderMatches(selected);
+    }
+
+    function renderMatches(matches) {
+      const container = document.getElementById("matches");
+      container.innerHTML = "";
+      matches.forEach(match => {
+        const div = document.createElement("div");
+        div.classList.add("match");
+        div.innerHTML = `
+          <h3>${match.team1} vs ${match.team2}</h3>
+          <p><strong>Predicție: ${match.prediction}</strong></p>
+          <a href="${match.link}" target="_blank">
+            <img src="${match.image}" alt="${match.team1} vs ${match.team2}">
+          </a>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function toggleConclusions() {
+      const conclusions = document.getElementById("conclusions");
+      conclusions.style.display = conclusions.style.display === "none" ? "block" : "none";
+    }
+  </script>
+
+</body>
+</html>
